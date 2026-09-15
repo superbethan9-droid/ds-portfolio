@@ -37,6 +37,50 @@ public:
     }
     count++;
   }
+
+  bool popFront() {
+    if (head == nullptr) {
+      return false;
+    }
+    Node* temp=head;
+    head=head->next;
+    delete temp;
+    count--;
+    return true;
+  }
+
+  bool contains(const T& value) const {
+    Node* current =head;
+    while (current != nullptr) {
+      if (current->data == value) {
+	return true;
+      }
+      current = current->next;
+    }
+    return false;
+  }
+
+  bool remove(const T& value) {
+    if (head ==nullptr) {
+      return false;
+    }
+    if (head->data == value) {
+      return popFront();
+    }
+    Node* current =head;
+    
+    while (current->next != nullptr) {
+      if(current->next->data==value) {
+	Node* temp =current->next;
+	current->next = temp->next;
+	delete temp;
+	count--;
+	return true;
+      }
+      current = current->next;
+    }
+    return false;
+  }
   
   int size() const {
       return count;
