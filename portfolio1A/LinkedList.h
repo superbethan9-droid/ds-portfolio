@@ -1,5 +1,6 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
+#include <iostream>
 
 template <typename T>
 class LinkedList {
@@ -49,6 +50,29 @@ public:
       current=current->next;
     }
     return *this;
+  }
+
+  class Iterator {
+  private:
+    Node* current;
+  public:
+    Iterator(Node* node) : current(node) {}
+    T& operator*() {
+      return current->data;
+    }
+    Iterator& operator++() {
+      current = current->next;
+      return *this;
+    }
+    bool operator!=(const Iterator& other) const {
+      return current != other.current;
+    }
+  };
+  Iterator begin() {
+    return Iterator(head);
+  }
+  Iterator end() {
+    return Iterator(nullptr);
   }
 
   void pushFront(const T& value) {
@@ -114,6 +138,15 @@ public:
       current = current->next;
     }
     return false;
+  }
+
+  void print() const {
+    Node* current = head;
+    while(current != nullptr) {
+      std::cout << current->data << " ";
+      current = current->next;
+    }
+    std::cout << std::endl;
   }
   
   int size() const {

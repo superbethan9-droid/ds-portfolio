@@ -70,7 +70,20 @@ int main() {
   std::cout << "expected assigned size after pushFront:4" << std::endl;
   std::cout << "actual assigned size after pushFront:" << assignedList.size() << std::endl;
 
-  
+  std::cout << std::endl;
+  std::cout << "testing iterator" << std::endl;
+  std::cout << "expected values:20 10 50" << std::endl;
+  std::cout << "actual values:";
+  for (int value : list) {
+    std::cout << value << " ";
+  }
+  std::cout << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "testing print" << std::endl;
+  std::cout << "expected values:20 10 50" << std::endl;
+  std::cout << "actual values:";
+  list.print();
   
   return 0;
 }
