@@ -17,6 +17,40 @@ private:
 public:
   LinkedList() : head(nullptr), count(0) {}
 
+  ~LinkedList() {
+    Node* current=head;
+    while (current != nullptr) {
+      Node* temp = current;
+      current=current->next;
+      delete temp;
+    }
+    head=nullptr;
+    count=0;
+  }
+
+  LinkedList(const LinkedList& other) : head(nullptr), count(0) {
+    Node* current =other.head;
+    while( current != nullptr) {
+      pushBack(current->data);
+      current = current->next;
+    }
+  }
+
+  LinkedList& operator=(const LinkedList& other) {
+    if(this==&other) {
+      return *this;
+    }
+    while (head != nullptr){
+      popFront();
+    }
+    Node* current = other.head;
+    while(current != nullptr) {
+      pushBack(current->data);
+      current=current->next;
+    }
+    return *this;
+  }
+
   void pushFront(const T& value) {
     Node* newNode = new Node(value);
     newNode->next =head;

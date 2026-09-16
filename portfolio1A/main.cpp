@@ -45,6 +45,32 @@ int main() {
   std::cout << "actual size:" << list.size() << std::endl;
   std::cout << "expected contains 40:0" << std::endl;
   std::cout << "actual contains 40:" << list.contains(40) << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "testing copy constructor" << std::endl;
+  LinkedList<int> copyList = list;
+  std::cout << "expected copy size:3" << std::endl;
+  std::cout << "actual copy size:" << copyList.size() << std::endl;
+  copyList.pushFront(99);
+  std::cout << "expected original size:3" << std::endl;
+  std::cout << "actual original size:" << list.size() << std::endl;
+  std::cout << "expected copy size after pushFront:4" << std::endl;
+  std::cout << "actual copy size after pushFront:" << copyList.size() << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "testing copy assignment" << std::endl;
+  LinkedList<int> assignedList;
+  assignedList.pushBack(500);
+  assignedList=list;
+  std::cout << "expected assigned size:3" << std::endl;
+  std::cout << "actual assigned size:" << assignedList.size() << std::endl;
+  assignedList.pushFront(99);
+  std::cout << "expected original size:3" << std::endl;
+  std::cout << "actual original size:" << list.size() << std::endl;
+  std::cout << "expected assigned size after pushFront:4" << std::endl;
+  std::cout << "actual assigned size after pushFront:" << assignedList.size() << std::endl;
+
+  
   
   return 0;
 }
