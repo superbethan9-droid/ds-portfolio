@@ -1,5 +1,18 @@
 #include <iostream>
 #include "LinkedList.h"
+#include <string>
+
+struct Student {
+  std::string name;
+  int id;
+  bool operator==(const Student& other) const {
+    return name ==  other.name && id == other.id;
+  }
+};
+std::ostream& operator<<(std::ostream& os, const Student& student) {
+  os << student.name << " "<< student.id;
+  return os;
+}
 
 int main() {
   LinkedList<int> list;
@@ -84,6 +97,26 @@ int main() {
   std::cout << "expected values:20 10 50" << std::endl;
   std::cout << "actual values:";
   list.print();
+
+  std::cout << std::endl;
+  std::cout << "testing strng list" << std::endl;
+  LinkedList<std::string> stringList;
+  stringList.pushBack("apple");
+  stringList.pushBack("banana");
+  stringList.pushBack("cherry");
+  std::cout << "expected values:apple banana cherry" << std::endl;
+  std::cout << "actual values:";
+  stringList.print();
+
+  std::cout << std::endl;
+  std::cout << "testing custom struct list" << std::endl;
+  LinkedList<Student> studentList;
+  studentList.pushBack({"Ben", 101});
+  studentList.pushBack({"Johns", 102});
+  studentList.pushBack({"Ethan", 103});
+  std::cout << "expected values:Ben 101 Johns 102 Ethan 103" << std::endl;
+  std::cout << "actual values:";
+  studentList.print();
   
   return 0;
 }
