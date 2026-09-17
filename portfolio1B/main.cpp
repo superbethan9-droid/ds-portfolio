@@ -18,6 +18,20 @@ int main() {
   std::cout << "expected document: hello" << std::endl;
   std::cout << "actual document: ";
   buffer.print();
+
+  std::cout << std::endl;
+  std::cout << "testing UNDO" << std::endl;
+  buffer.undo();
+  std::cout << "expected document: hello world" << std::endl;
+  std::cout << "actual document: ";
+  buffer.print();
+
+  std::cout << std::endl;
+  std::cout << "testing REDO" << std::endl;
+  buffer.redo();
+  std::cout << "expected document: hello" << std::endl;
+  std::cout << "actual document: ";
+  buffer.print();
   
   return 0;
 }

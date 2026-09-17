@@ -40,6 +40,33 @@ void TextBuffer::deleteChars(int n) {
   }
 }
 
+void TextBuffer::undo() {
+  if (undoStack.isEmpty()) {
+    return;
+  }
+  UndoRecord record = undoStack.pop();
+  if (record.action == "TYPE") {
+    document.erase(record.position, record.text.size());
+  }
+  else if (record.action == "DELETE") {
+    document.insert (record.position, record.text);
+  }
+  redoStack.push(record);
+}
+
+void TextBuffer::redo() {
+  if (redoStack.isEmpty()) {
+    return;
+  }
+  UndoRecord record =redoStack.pop();
+  if (record.action == "TYPE") {
+    document.insert(record.position, record.text);
+  }
+  else if (record.action == "DELETE") {
+    document.erase(record.position, record.text.size());
+  }
+  undoStack.push(record);
+}
 
 void TextBuffer::print() const {
   std::cout << document << std::endl;
