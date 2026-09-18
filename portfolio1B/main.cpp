@@ -1,37 +1,45 @@
 #include <iostream>
 #include "TextBuffer.h"
+#include <sstream>
+#include <string>
 
 int main() {
   TextBuffer buffer;
-  std::cout << "testing TYPE and PRInt" << std::endl;
+  std::string command;
+  std::cout << "Undo/Redo Text Buffer" << std::endl;
+  std::cout << "commands: TYPE <text>, DELETE <n>, UNDO, REDO, PRINT, QUIT"
+	    << std::endl;
+  while (std::getline(std::cin, command)) {
+    if(command.rfind("TYPE ", 0)==0) {
+      buffer.typeText(command.substr(5));
+    }
+    else if (command.rfind("DELETE ", 0)==0) {
+      std::istringstream input(command.substr(7));
+      int n;
 
-  buffer.typeText("hello");
-  buffer.typeText(" world");
-
-  std::cout << "expected document: hello world" << std::endl;
-  std::cout << "actual document: ";
-  buffer.print();
-
-  std::cout << std::endl;
-  std::cout << "testing DELETE" << std::endl;
-  buffer.deleteChars(6);
-  std::cout << "expected document: hello" << std::endl;
-  std::cout << "actual document: ";
-  buffer.print();
-
-  std::cout << std::endl;
-  std::cout << "testing UNDO" << std::endl;
-  buffer.undo();
-  std::cout << "expected document: hello world" << std::endl;
-  std::cout << "actual document: ";
-  buffer.print();
-
-  std::cout << std::endl;
-  std::cout << "testing REDO" << std::endl;
-  buffer.redo();
-  std::cout << "expected document: hello" << std::endl;
-  std::cout << "actual document: ";
-  buffer.print();
-  
+      if(input >> n) {
+	buffer.deleteChars(n);
+      }
+      else {
+	std::cout << "Invalid DELETE command" << std::endl;
+      }
+    }
+    else if (command=="UNDO") {
+      buffer.undo();
+    }
+    else if (command=="REDO") {
+      buffer.redo();
+    }
+    else if(command=="PRINT") {
+      buffer.print();
+    }
+    else if (command=="QUIT") {
+      break;
+    }
+    else if(!command.empty()) {
+      std::cout << "Unknown command" << std::endl;
+    }
+  }
   return 0;
 }
+      
