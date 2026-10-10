@@ -29,6 +29,40 @@ private:
       return searchHelper(node->left, value);
     return searchHelper(node->right, value);
   }
+  Node* findMin(Node* node) const {
+    if (node->left == nullptr)
+      return node;
+    return findMin(node->left);
+  }
+  Node* removeHelper(Node* node, const T& value) {
+    if (node==nullptr)
+      return nullptr;
+    if (value < node->value)
+      node->left = removeHelper(node->left, value);
+    else if (value > node->value)
+      node->right = removeHelper(node->right, value);
+    else {
+      if (node->left == nullptr && node->right == nullptr) {
+	delete node;
+	return nullptr;
+      }
+      if (node->left == nullptr) {
+	Node* temp = node->right;
+	delete node;
+	return temp;
+      }
+      if (node->right==nullptr) {
+	Node* temp = node->left;
+	delete node;
+	return temp;
+      }
+      Node* successor = findMin(node->right);
+      node->value = successor->value;
+      node->right=removeHelper(node->right, successor->value);
+    }
+    return node;
+  }
+      
 public:
   BST() : root(nullptr) {}
   void insert(const T& value) {
@@ -37,6 +71,10 @@ public:
   bool search(const T& value) const {
     return searchHelper(root, value);
   }
+  void remove(const T& value) {
+    root=removeHelper(root, value);
+  }
+  
 };
 
 #endif

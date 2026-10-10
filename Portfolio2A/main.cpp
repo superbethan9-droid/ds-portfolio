@@ -24,5 +24,34 @@ int main() {
   std::cout << "Expected: false\n";
   std::cout << "Actual: " << tree.search(100) << "\n";
 
+  std::cout << "\nTesting BST removal\n";
+  tree.insert(60);
+  tree.insert(80);
+  tree.insert(65);
+  tree.remove(20);
+  std::cout << "\nRemove leaf node (20):\n";
+  std::cout << "expected: false\n";
+  std::cout << "actual: " << tree.search(20) << "\n";
+
+  tree.remove(60);
+  std::cout << "\nremove node with one child (60):\n";
+  std::cout << "expected: false\n";
+  std::cout << "actual: " << tree.search(60) << "\n";
+  std::cout << "\nCheck child remains (65):\n";
+  std::cout << "expected: true\n";
+  std::cout << "actual: " << tree.search(65) << "\n";
+
+  tree.remove(50);
+  std::cout << "\nremove node with two children (50):\n";
+  std::cout << "expected: false\n";
+  std::cout << "actual: " << tree.search(50) << "\n";
+  std::cout << "\ncheck remaining nodes:\n";
+  std::cout << "expected: true\n";
+  std::cout << "actual (30): " << tree.search(30) << "\n";
+  std::cout << "actual (40): " << tree.search(40) << "\n";
+  std::cout << "actual (65): " << tree.search(65) << "\n";
+  std::cout << "actual (70): " << tree.search(70) << "\n";
+  std::cout << "actual (80): " << tree.search(80) << "\n";
+
   return 0;
 }
