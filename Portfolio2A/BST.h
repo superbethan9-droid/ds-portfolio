@@ -62,6 +62,20 @@ private:
     }
     return node;
   }
+
+  int heightHelper(const Node* node) const {
+    if (node==nullptr)
+      return -1;
+    int leftHeight = heightHelper(node->left);
+    int rightHeight = heightHelper(node->right);
+    return 1+ (leftHeight>rightHeight? leftHeight: rightHeight);
+  }
+  int sizeHelper(const Node* node) const {
+    if (node == nullptr)
+      return 0;
+    return 1+ sizeHelper(node->left) + sizeHelper(node->right);
+  }
+  
       
 public:
   BST() : root(nullptr) {}
@@ -74,6 +88,13 @@ public:
   void remove(const T& value) {
     root=removeHelper(root, value);
   }
+  int height() const {
+    return heightHelper(root);
+  }
+  int size() const {
+    return sizeHelper(root);
+  }
+
   
 };
 

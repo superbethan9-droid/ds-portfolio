@@ -53,5 +53,21 @@ int main() {
   std::cout << "actual (70): " << tree.search(70) << "\n";
   std::cout << "actual (80): " << tree.search(80) << "\n";
 
+  std::cout << "\ntesting BST height and size\n";
+  std::cout << "\ntree size:\n";
+  std::cout << "expected: 5\n";
+  std::cout << "actual: " << tree.size() << "\n";
+  std::cout << "\ntree height:\n";
+  std::cout << "expected: 2\n";
+  std::cout << "actual: " << tree.height() << "\n";
+
+  BST<int> emptyTree;
+  std::cout << "\nempty tree size:\n";
+  std::cout << "expected: 0\n";
+  std::cout << "actual: " << emptyTree.size() << "\n";
+  std::cout << "\nempty tree height:\n";
+  std::cout << "expected: -1\n";
+  std::cout << "actual: " << emptyTree.height() << "\n";
+
   return 0;
 }
