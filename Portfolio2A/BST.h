@@ -1,5 +1,7 @@
 #ifndef BST_H
 #define BST_H
+#include <vector>
+
 
 template <typename T>
 class BST {
@@ -75,6 +77,38 @@ private:
       return 0;
     return 1+ sizeHelper(node->left) + sizeHelper(node->right);
   }
+  void inorderHelper(const Node* node, std::vector<T>& result) const {
+    if (node==nullptr)
+      return;
+
+    inorderHelper(node->left, result);
+    result.push_back(node->value);
+    inorderHelper(node->right, result);
+  }
+  void preorderHelper(const Node* node, std::vector<T>& result) const {
+    if (node == nullptr)
+      return;
+    result.push_back(node->value);
+    preorderHelper(node->left, result);
+    preorderHelper(node->right, result);
+  }
+  void postorderHelper(const Node* node, std::vector<T>& result) const {
+    if (node==nullptr)
+      return;
+    postorderHelper(node->left, result);
+    postorderHelper(node->right, result);
+    result.push_back(node->value);
+  }
+  void levelorderHelper(const Node* node, int level, std::vector<T>& result) const {
+    if (node==nullptr)
+      return;
+    if (level==0) {
+      result.push_back(node->value);
+    } else {
+      levelorderHelper(node->left, level -1, result);
+      levelorderHelper(node->right, level -1, result);
+    }
+  }
   
       
 public:
@@ -94,7 +128,27 @@ public:
   int size() const {
     return sizeHelper(root);
   }
-
+  std::vector<T> inorder() const {
+    std::vector<T> result;
+    inorderHelper(root, result);
+    return result;
+  }
+  std::vector<T> preorder() const {
+    std::vector<T> result;
+    preorderHelper(root, result);
+    return result;
+  }
+  std::vector<T> postorder() const {
+    std::vector<T> result;
+    postorderHelper(root, result);
+    return result;
+  }
+  std::vector<T> levelorder() const {
+    std::vector<T> result;
+    for(int level=0; level <=height(); level++)
+      levelorderHelper(root, level, result);
+    return result;
+  }
   
 };
 
