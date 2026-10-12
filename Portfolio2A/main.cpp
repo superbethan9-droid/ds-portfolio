@@ -69,5 +69,56 @@ int main() {
   std::cout << "expected: -1\n";
   std::cout << "actual: " << emptyTree.height() << "\n";
 
+  std::cout << "\ntesting BST traversals\n";
+  std::cout << "\ninorder traversal:\n";
+  std::cout << "expected: 30 40 65 70 80\n";
+  std::cout << "actual: ";
+  for (int value : tree.inorder())
+    std::cout << value << " ";
+  std::cout << "\n";
+
+  std::cout << "\npreorder traversal:\n";
+  std::cout << "expected: 65 30 40 70 80:\n";
+  std::cout << "actual: ";
+  for (int value : tree.preorder())
+    std::cout << value << " ";
+  std::cout << "\n";
+
+  std::cout << "\npreorder traversal:\n";
+  std::cout << "expected: 65 30 40 70 90\n";
+  std::cout << "actual: ";
+  for (int value : tree.preorder())
+    std::cout << value << " ";
+  std::cout << "\n";
+
+  std::cout << "\npostorder traversal:\n";
+  std::cout << "expected: 40 30 80 70 65\n";
+  std::cout << "actual: ";
+  for (int value : tree.postorder())
+    std::cout << value << " ";
+  std::cout << "\n";
+
+  std::cout << "\nlevel order traversal:\n";
+  std::cout << "expected: 65 30 70 40 80\n";
+  std::cout << "actual: ";
+  for (int value : tree.levelorder())
+    std::cout << value <<" ";
+  std::cout << "\n";
+
+  std::cout << "\ntesting BST copy constructor\n";
+  BST<int> copiedTree(tree);
+  std::cout << "\ncopied tree size:\n";
+  std::cout << "expected: 5\n";
+  std::cout << "actual: " << copiedTree.size() << "\n";
+  copiedTree.remove(30);
+  std::cout << "\noriginal tree still contains 30:\n";
+  std::cout << "expected: true\n";
+  std::cout << "actual:" << tree.search(30) << "\n";
+  std::cout << "\ncopied tree contains 30:\n";
+  std::cout << "expected: false\n";
+  std::cout << "actual: " << copiedTree.search(30) << "\n";
+
+
+
   return 0;
 }

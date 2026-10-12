@@ -109,10 +109,32 @@ private:
       levelorderHelper(node->right, level -1, result);
     }
   }
+  void destroyHelper(Node*node) {
+    if (node==nullptr)
+      return;
+    destroyHelper(node->left);
+    destroyHelper(node->right);
+    delete node;
+  }
+
+  Node* copyHelper(const Node* node) const {
+    if (node ==nullptr)
+      return nullptr;
+    Node* newNode = new Node(node->value);
+    newNode->left = copyHelper(node->left);
+    newNode->right=copyHelper(node->right);
+    return newNode;
+  }
   
       
 public:
   BST() : root(nullptr) {}
+  BST(const BST& other) : root(nullptr) {
+    root = copyHelper(other.root);
+  }
+  ~BST() {
+    destroyHelper(root);
+  }
   void insert(const T& value) {
     root = insertHelper(root, value);
   }
