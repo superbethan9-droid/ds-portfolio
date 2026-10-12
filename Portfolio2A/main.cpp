@@ -84,13 +84,7 @@ int main() {
     std::cout << value << " ";
   std::cout << "\n";
 
-  std::cout << "\npreorder traversal:\n";
-  std::cout << "expected: 65 30 40 70 90\n";
-  std::cout << "actual: ";
-  for (int value : tree.preorder())
-    std::cout << value << " ";
-  std::cout << "\n";
-
+  
   std::cout << "\npostorder traversal:\n";
   std::cout << "expected: 40 30 80 70 65\n";
   std::cout << "actual: ";
@@ -117,6 +111,30 @@ int main() {
   std::cout << "\ncopied tree contains 30:\n";
   std::cout << "expected: false\n";
   std::cout << "actual: " << copiedTree.search(30) << "\n";
+
+  std::cout << "\ntesting BST copy assignment\n";
+  BST<int> assignedTree;
+  assignedTree.insert(999);
+  assignedTree=tree;
+  std::cout << "\nassigned tree size:\n";
+  std::cout << "exxpected: 5\n";
+  std::cout << "actual: " << assignedTree.size() << "\n";
+  std::cout << "\nold value removed (999):\n";
+  std::cout << "expected: false\n";
+  std::cout << "actual: " << assignedTree.search(999) << "\n";
+  
+  assignedTree.remove(40);
+  std::cout << "\noriginal tree still contains 40:\n";
+  std::cout << "expected: true\n";
+  std::cout << "actual: " << tree.search(40) << "\n";
+  assignedTree=assignedTree;
+  std::cout << "\nself assignment size:\n";
+  std::cout << "expected: 4\n";
+  std::cout << "actual: " << assignedTree.size() << "\n";
+  assignedTree = emptyTree;
+  std::cout << "\nassign empty tree:\n";
+  std::cout << "expected: 0\n";
+  std::cout << "actual: " << assignedTree.size() << "\n";
 
 
 

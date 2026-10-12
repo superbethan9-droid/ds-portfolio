@@ -135,6 +135,14 @@ public:
   ~BST() {
     destroyHelper(root);
   }
+  BST& operator=(const BST& other) {
+    if (this != &other) {
+      Node* newRoot = copyHelper(other.root);
+      destroyHelper(root);
+      root=newRoot;
+    }
+    return *this;
+  }
   void insert(const T& value) {
     root = insertHelper(root, value);
   }
