@@ -39,6 +39,15 @@ int main() {
   std::cout << "expected: 2\n";
   std::cout << "actual: " << directory.height() << "\n";
 
+  std::cout << "\ntesting list of sorted contacts\n";
+  std::cout << "\nexpected order:\n";
+  std::cout << "Brown, Alice - 555-0202\n";
+  std::cout << "Johns, Ben - 555-0101\n";
+  std::cout << "Smith, Mary - 555-0303\n";
+  std::cout << "Wilson, Zoe - 555-0404\n";
+  std::cout << "\nactual order:\n";
+  directory.list();
+
   result = directory.remove("Johns");
   std::cout << "Expected: true\n";
   std::cout << "actual: " << result << "\n";
@@ -54,6 +63,19 @@ int main() {
   result = directory.remove("Johnson");
   std::cout << "expected: false\n";
   std::cout << "actual: " << result << "\n";
+
+
+  std::cout << "\ntesting LIST with same last name\n";
+  Directory tieDirectory;
+  tieDirectory.add({"Mary", "Smith", "555-0303"});
+  tieDirectory.add({"Adam", "Smith", "555-0505"});
+  tieDirectory.add({"Zoe", "Smith", "555-0606"});
+  std::cout << "\nexpected order:\n";
+  std::cout << "Smith, Adam - 555-0505\n";
+  std::cout << "Smith, Mary - 555-0303\n";
+  std::cout << "Smith, Zoe - 555-0606\n";
+  std::cout << "\nactual order:\n";
+  tieDirectory.list();
   
 
 

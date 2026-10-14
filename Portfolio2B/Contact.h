@@ -2,7 +2,7 @@
 #define CONTACT_H
 #include <string>
 #include "BST.h"
-
+#include <iostream>
 
 struct Contact {
   std::string firstName;
@@ -46,6 +46,18 @@ public:
       }
     }
     return false;
+  }
+  void list() const {
+    auto contacts = tree.inorder();
+    if (contacts.empty()) {
+      std::cout << "directory is empty\n";
+      return;
+    }
+    for (const Contact& c : contacts) {
+      std::cout << c.lastName << ", "
+		<< c.firstName << " - "
+		<< c.phone << "\n";
+    }
   }
   int count() const {
     return tree.size();
