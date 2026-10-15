@@ -1,83 +1,69 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include "Contact.h"
 
 int main() {
   Directory directory;
-  std::cout << std::boolalpha;
-  std::cout << "testing contact directory\n";
-  directory.add({"Ben", "Johns", "555-0101"});
-  directory.add({"Alice", "Brown", "555-0202"});
-  directory.add({"Mary", "Smith", "555-0303"});
-  directory.add({"Zoe", "Wilson", "555-0404"});
+  std::string line;
+  std::cout << "contact directory\n";
+  std::cout << "commands: ADD, LOOKUP, DELETE, LIST, COUNT, EXIT\n";
 
-  std::cout << "\ntesting ADD and COUNT\n";
-  std::cout << "expected count: 4\n";
-  std::cout << "actual count: " << directory.count() << "\n";
-
-  Contact found;
-  std::cout << "\ntesting LOOKUP (Smith)\n";
-  bool result = directory.lookup("Smith", found);
-  std::cout << "expected: true\n";
-  std::cout << "actual: " << result << "\n";
-  if (result) {
-    std::cout << "expected contact: Mary Smith\n";
-    std::cout << "actual contact: "
-	      << found.firstName << " "
-	      << found.lastName << "\n";
+  while (std::getline(std::cin, line)) {
+    std::istringstream input(line);
+    std::string command;
+    if (!(input >> command))
+      continue;
+    if (command == "ADD") {
+      std::string first, last, phone;
+      if (input >> first >> last >> phone) {
+	directory.add({first, last, phone});
+	std::cout << "Added: " << first
+		  << " " << last << "\n";
+      } else {
+	std::cout << "usage: ADD <first> <last> <phone>\n";
+      }
+    }
+    else if (command == "LOOKUP") {
+      std::string last;
+      Contact found;
+      if (input >> last) {
+	if (directory.lookup(last, found)) {
+	  std::cout << found.firstName << " "
+		    << found.lastName << " - "
+		    << found.phone << "\n";
+	} else{
+	  std::cout << "not found\n";
+	}  
+      }else {
+	std::cout << "usage: LOOKUP <last>\n";
+      }
+    }
+      else if(command == "DELETE") {
+	std::string last;
+	if (input >> last) {
+	  if (directory.remove(last))
+	    std::cout << "contact deleted\n";
+	  else
+	    std::cout << "not found\n";
+	} else {
+	  std::cout << "usage: DELETE <last>\n";
+	}
+      }
+      else if (command == "LIST") {
+	directory.list();
+      }
+      else if (command == "COUNT") {
+	std::cout << "contacts: " << directory.count() << "\n";
+	std::cout << "tree height: " << directory.height() << "\n";
+      }
+      else if (command == "EXIT") {
+	std::cout << "Bye !!!\n";
+	break;
+      }
+      else {
+	std::cout << "unknown command\n";
+      }
   }
-
-  std::cout << "\ntesting LOOKUP (Brown)\n";
-  result = directory.lookup("Brown", found);
-  std::cout << "expected: true\n";
-  std::cout << "actual: " << result << "\n";
-
-  std::cout << "\ntesting LOOKUP (Not Found)\n";
-  result = directory.lookup("Johnson", found);
-  std::cout << "expected: false\n";
-  std::cout << "actual: " << result << "\n";
-  std::cout << "\ntesting tree height\n";
-  std::cout << "expected: 2\n";
-  std::cout << "actual: " << directory.height() << "\n";
-
-  std::cout << "\ntesting list of sorted contacts\n";
-  std::cout << "\nexpected order:\n";
-  std::cout << "Brown, Alice - 555-0202\n";
-  std::cout << "Johns, Ben - 555-0101\n";
-  std::cout << "Smith, Mary - 555-0303\n";
-  std::cout << "Wilson, Zoe - 555-0404\n";
-  std::cout << "\nactual order:\n";
-  directory.list();
-
-  result = directory.remove("Johns");
-  std::cout << "Expected: true\n";
-  std::cout << "actual: " << result << "\n";
-  std::cout << "\ncheck Johns was removed\n";
-  result = directory.lookup("Johns", found);
-  std::cout << "expected: false\n";
-  std::cout << "actual: " << result<< "\n";
-
-  std::cout << "\ncount after deletion\n";
-  std::cout << "expected: 3\n";
-  std::cout << "actual: " << directory.count() << "\n";
-  std::cout << "\ndelete nonexistent contact\n";
-  result = directory.remove("Johnson");
-  std::cout << "expected: false\n";
-  std::cout << "actual: " << result << "\n";
-
-
-  std::cout << "\ntesting LIST with same last name\n";
-  Directory tieDirectory;
-  tieDirectory.add({"Mary", "Smith", "555-0303"});
-  tieDirectory.add({"Adam", "Smith", "555-0505"});
-  tieDirectory.add({"Zoe", "Smith", "555-0606"});
-  std::cout << "\nexpected order:\n";
-  std::cout << "Smith, Adam - 555-0505\n";
-  std::cout << "Smith, Mary - 555-0303\n";
-  std::cout << "Smith, Zoe - 555-0606\n";
-  std::cout << "\nactual order:\n";
-  tieDirectory.list();
-  
-
-
   return 0;
-}
+}             
