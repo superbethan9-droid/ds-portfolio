@@ -22,13 +22,13 @@ private:
   }
 
   //move element downward to maintait the himheap property
-  void heapifyDownI (int index) {
+  void heapifyDown (int index) {
     int n=static_cast<int>(data.size());
     while (true) {
       int left = 2*index +1;
       int right=2* index+2;
       int smallest=index;
-      if (left <n && data[left] < data{smallest]) {
+      if (left <n && data[left] < data[smallest]) {
 	smallest = left;
       }
       if (right < n && data[right]< data[smallest]) {
