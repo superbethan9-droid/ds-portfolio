@@ -3,7 +3,7 @@
 #include <vector>
 #include <list>
 #include <string>
-#include <finctional>
+#include <functional>
 #include <type_traits>
 #include <cstddef>
 
@@ -77,7 +77,7 @@ public:
   //remove a keyvalue pair if it exists
   bool remove(const K& key) {
     std::size_t index = hash(key) % buckets.size();
-    auto& bucket = bucket[index];
+    auto& bucket = buckets[index];
     for (auto it = bucket.begin(); it != bucket.end(); ++it) {
       if (it->key == key) {
 	bucket.erase(it);
