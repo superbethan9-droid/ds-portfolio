@@ -1,0 +1,5 @@
+Apple banana apple orange banana apple.
+Orange grape banana apple!
+Grape orange apple banana.
+Computer science is fun.
+Science is useful, but computer science is cooler.

@@ -5,6 +5,8 @@
 #include <sstream>
 #include "Task.h"
 #include "../Portfolio3A/MinHeap.h"
+#include <exception>
+#include "WordCounter.h"
 
 
 //check if two tasks have the same name and priority
@@ -21,10 +23,11 @@ int main() {
   > stlQueue;
   bool allMatch= true;
   int comparisons=0;
+  bool wordCountsMatch=true;
   std::cout << "----Priority Task Scheduler----\n";
   std::cout << "Lower priority numbers run first\n";
   std::cout << "Commands: ADD <name> <priority>, "
-            << "NEXT, LIST, QUIT\n";
+            << "NEXT, LIST, WORDS <filename>, QUIT\n";
   std::string line;
   while (std::getline(std::cin, line)) {
     std::istringstream input(line);
@@ -77,6 +80,42 @@ int main() {
 		  << ")\n";
       }
     }
+    else if (command == "WORDS") {
+      std::string filename;
+      std::string extra;
+      if (!(input >> filename) || (input >> extra)) {
+	std::cout << "usage: WORDS <filename>\n";
+	continue;
+      }
+      try {
+	std::vector<std::string> uniqueWords;
+	//counts the words using the Hashtable
+	auto custom=countWordsCustom(
+				     filename, uniqueWords
+				     );
+	//count the same file using STL
+	auto stl=countWordsSTL(filename);
+	std::cout << "\n---- Word frequency counter ----\n";
+	std::cout << "File: " << filename << '\n';
+	//show the top 10 most frequent words
+	printTopTen(custom, uniqueWords);
+
+	//compare custom counts against STL counts
+	std::cout << "\n---- STL word count check ----\n";
+	bool match = compareWordCounts(stl, custom);
+	std::cout << "Custom unique words: "
+		  << custom.size() << '\n';
+	std::cout << "STL unique words: "
+		  << stl.size() << '\n';
+	if (!match) {
+	  wordCountsMatch=false;
+	}
+      }
+      catch (const std::exception& e) {
+	std::cout << "error: " << e.what() << '\n';
+	wordCountsMatch=false;
+      }
+    }
     else if (command =="QUIT") {
       break;
     }
@@ -107,5 +146,5 @@ int main() {
     std::cout << "extraction order: "
 	      << (allMatch ? "PASS" : "FAIL") << '\n';
   }
-  return allMatch ? 0:1;
+  return (allMatch && wordCountsMatch) ? 0:1;
 }
